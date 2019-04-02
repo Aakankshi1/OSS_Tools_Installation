@@ -1,0 +1,62 @@
+---
+# - name: enable Ansible repo on Ubuntu
+#   command: "{{ item }}"
+#   with_items:
+#    - apt-get update
+#    - apt-get install software-properties-common 
+#    - apt-add-repository ppa:ansible/ansible
+#    - apt-get update
+
+########~~~DOCKER_CONF~~~########
+
+# - name: Install Dep for Docker on Ubuntu
+#   command: "{{ item }}"
+#   with_items:
+#    - apt-get update
+#    - apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
+# - name: Download GPG Key for Docker
+#   get_url:
+#     url: https://download.docker.com/linux/ubuntu/gpg
+#     dest: /tmp/
+#     mode: 0440
+
+# - name: Enable Docker Repo on Ubuntu 
+#   command: "{{ item }}"
+#   with_items:
+#    - apt-key add /tmp/gpg
+#    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+#    - apt update
+#    - apt-cache policy docker-ce
+
+########~~~JENKINS_CONF~~~########
+
+ - name: Download GPG Key for Jenkins
+   get_url:
+     url: https://pkg.jenkins.io/debian/jenkins-ci.org.key
+     dest: /tmp/
+     mode: 0440
+
+ - name: Enable Docker Repo on Ubuntu
+   command: "{{ item }}"
+   with_items:
+    - apt-key add /tmp/jenkins-ci.org.key
+
+ - name: Create Repo file for Jenkins
+   file: path=/etc/apt/sources.list.d/jenkins.list mode=644 state=touch
+
+ - name: Install Dependency for Jenkins
+   apt:
+    name: openjdk-8-jdk
+    state: present
+
+ - name: Add Repo add to server list
+   shell: "{{ item }}"
+   with_items:
+    - echo deb https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
+#    - echo 'deb https://pkg.jenkins.io/debian-stable binary/' > /etc/apt/sources.list.d/jenkins.list
+    - apt-get update
+
+
+########~~~CHEF_CONF~~~########
+

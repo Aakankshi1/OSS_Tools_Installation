@@ -1,0 +1,6 @@
+---
+# Install Tools Packages
+
+- name: Install Tools
+  package: name={{ item }} state={{ pkgs_state }} update_cache=yes
+  with_items: "{{ pkgs_list }}"

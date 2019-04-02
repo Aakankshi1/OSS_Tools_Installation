@@ -1,0 +1,30 @@
+---
+# Main Tool's Installation List
+#- include_vars: "{{ pkg_vers }}.yml"
+
+#- include: dependencies.yml
+
+#- name: Check if package exists
+#  command: whereis {{ pkgs_list }}
+#  register: pkg_stat
+
+##- include: Configure_CR.yml
+##  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+##- include: Configure_D.yml
+##  when: ansible_distribution == 'Debian'
+
+- include: Configure_U.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- import_tasks: packages.yml
+#  when: pkg_stat.command.exists == False
+  notify:
+##  - enable docker
+  - enable Jenkins
+  - enable mysql
+
+- include: Service.yml
+
+#- include: setup.yml
+#  when: file.stat.exists == False

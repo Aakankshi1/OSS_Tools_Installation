@@ -1,0 +1,24 @@
+---
+# Packages to install
+#
+# Default list is inspired
+# by most common services
+pkgs_list:
+# - ansible
+# - git
+# - docker-ce
+# - chef
+ - jenkins
+ - mysql
+ - mysql-service
+
+
+# Do you want to update your platform?
+#
+# Possible values:
+#   - present:  Package is installed
+#   - latest:   Package is updated to the latest
+#               available version in {{pkg_vers}}
+#
+# Default value is "present" (no update)
+pkgs_state: present

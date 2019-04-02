@@ -1,0 +1,15 @@
+---
+# Main Tool's Installation List
+#- include_vars: "{{ pkg_vers }}.yml"
+
+#- include: dependencies.yml
+
+- name: Check if package exists
+  command: whereis {{ pkgs_list }}
+  register: pkg_stat
+
+- import_tasks: packages.yml
+  when: pkg_stat.command.exists == False
+
+#- include: setup.yml
+#  when: file.stat.exists == False
