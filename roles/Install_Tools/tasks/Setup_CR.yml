@@ -1,0 +1,10 @@
+---
+ - name: Install firewalld on RHEL
+   yum: name=firewalld state=present
+
+ - name: Enable Port for Grafana
+   firewall:
+    port: 3000/tcp 
+    permanent: yes
+    state: enabled
+

@@ -1,0 +1,6 @@
+---
+ - hosts: rhel 
+   remote_user: root
+   become: yes
+   roles:
+     - { role: roles/Install_Tools }
